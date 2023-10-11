@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BrightHr_Tests/bin/Debug/net6.0
+/BrightHr_Tests/obj
+/BrightHR_Checkout/.vs/ProjectEvaluation
+/BrightHR_Checkout/obj
+/BrightHR_Checkout/.vs/BrightHR_Checkout
