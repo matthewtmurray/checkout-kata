@@ -16,4 +16,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BrightHR_Checkout\BrightHR_Checkout.csproj" />
+  </ItemGroup>
+
 </Project>
