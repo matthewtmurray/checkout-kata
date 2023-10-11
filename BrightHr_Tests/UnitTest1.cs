@@ -74,5 +74,20 @@ namespace BrightHr_Tests
             var actualBasketTotal = _checkout.GetTotalPrice();
             Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
         }
+
+        [Test]
+        public void IsValidPrice_OneOfEach_NoOffers()
+        {
+            var basket = _oneOfEachItemBasket;
+            var expectedBasketTotal = 115;
+            _checkout = new Checkout(_skuRules_NoOffers);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
     }
 }
