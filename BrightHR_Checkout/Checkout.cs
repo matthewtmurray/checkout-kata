@@ -9,18 +9,21 @@ namespace BrightHR_Checkout
     public class Checkout : ICheckout
     {
         private List<SkuRule> _skuRules;
+        private string basketItems = string.Empty;
         public Checkout(List<SkuRule> skuRules)
         {
             _skuRules = skuRules;
         }
         public void Scan(string item)
         {
-            throw new NotImplementedException();
+            basketItems = basketItems + item;
         }
 
         public int GetTotalPrice()
         {
-            throw new NotImplementedException();
+            var totalPrice = 0;
+            totalPrice += _skuRules.Where(r => r.Sku == basketItems[0]).Select(r => r.Price).FirstOrDefault();
+            return totalPrice;
         }
     }
 }
