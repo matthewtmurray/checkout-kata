@@ -89,5 +89,110 @@ namespace BrightHr_Tests
             var actualBasketTotal = _checkout.GetTotalPrice();
             Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
         }
+
+        [Test]
+        public void IsValidPrice_LowMultiplesBasket_NoOffers()
+        {
+            var basket = _lowMultiplesBasket;
+            var expectedBasketTotal = 205;
+            _checkout = new Checkout(_skuRules_NoOffers);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesBasket_NoOffers()
+        {
+            var basket = _highMultiplesBasket;
+            var expectedBasketTotal = 1765;
+            _checkout = new Checkout(_skuRules_NoOffers);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesBasket_AllOffers()
+        {
+            var basket = _highMultiplesBasket;
+            var expectedBasketTotal = 1575;
+            _checkout = new Checkout(_skuRules_AllOffers);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesBasket_LowMultipleOffers()
+        {
+            var basket = _highMultiplesBasket;
+            var expectedBasketTotal = 1553;
+            _checkout = new Checkout(_skuRules_LowMultiples);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesRandomOrderBasket_HiMultipleOffers()
+        {
+            var basket = _highMultiplesRandomOrderBasket;
+            var expectedBasketTotal = 765;
+            _checkout = new Checkout(_skuRules_HighMultiples);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesRandomOrderBasket_NoOffers()
+        {
+            var basket = _highMultiplesRandomOrderBasket;
+            var expectedBasketTotal = 765;
+            _checkout = new Checkout(_skuRules_NoOffers);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void IsValidPrice_HighMultiplesRandomOrderBasket_LowMultipleOffers()
+        {
+            var basket = _highMultiplesRandomOrderBasket;
+            var expectedBasketTotal = 664;
+            _checkout = new Checkout(_skuRules_LowMultiples);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
     }
 }
