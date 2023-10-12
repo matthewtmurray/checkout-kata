@@ -15,6 +15,7 @@ namespace BrightHr_Tests
         private string _lowMultiplesBasket = "AABCCCD";
         private string _highMultiplesBasket = "AAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBCCCCCCD";
         private string _highMultiplesRandomOrderBasket = "BADDDACAACABBBBBCACACDCCCD";
+        private string _invalidItemBasket = "J";
 
         [SetUp]
         public void Setup()
@@ -193,6 +194,21 @@ namespace BrightHr_Tests
 
             var actualBasketTotal = _checkout.GetTotalPrice();
             Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
+        }
+
+        [Test]
+        public void PriceCheckThowsError_InvalidItemBasket_LowMultipleOffers()
+        {
+            var basket = _invalidItemBasket;
+            var expectedBasketTotal = 0;
+            _checkout = new Checkout(_skuRules_LowMultiples);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            Assert.Throws<Exception>(()=> _checkout.GetTotalPrice());
+
         }
     }
 }

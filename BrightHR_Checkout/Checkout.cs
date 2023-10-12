@@ -18,6 +18,14 @@
             var totalPrice = 0;
             var basketItemsArray = _basketItems.ToCharArray();
 
+            foreach (var item in basketItemsArray)
+            {
+                if (!_skuRules.Any(r => r.Sku == item))
+                {
+                    throw new Exception("Unidentified item in the bagging area");
+                }
+            }
+
             var aCount = basketItemsArray.Count(letter => letter == 'A');
             var bCount = basketItemsArray.Count(letter => letter == 'B');
             var cCount = basketItemsArray.Count(letter => letter == 'C');
