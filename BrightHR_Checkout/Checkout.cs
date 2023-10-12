@@ -17,6 +17,7 @@
         {
             var totalPrice = 0;
             var basketItemsArray = _basketItems.ToCharArray();
+            List<Basket> basketList = new List<Basket>();
 
             foreach (var item in basketItemsArray)
             {
@@ -24,17 +25,21 @@
                 {
                     throw new Exception("Unidentified item in the bagging area");
                 }
+
+                if (basketList.Any(b => b.Sku == item))
+                {
+                    basketList.Where(b => b.Sku == item).ToList().ForEach(b => b.Count++);
+                }
+                else
+                {
+                    basketList.Add(new Basket{Sku = item, Count = 1});
+                }
             }
 
-            var aCount = basketItemsArray.Count(letter => letter == 'A');
-            var bCount = basketItemsArray.Count(letter => letter == 'B');
-            var cCount = basketItemsArray.Count(letter => letter == 'C');
-            var dCount = basketItemsArray.Count(letter => letter == 'D');
-
-            totalPrice += GetTotalPricePerItem('A', aCount);
-            totalPrice += GetTotalPricePerItem('B', bCount);
-            totalPrice += GetTotalPricePerItem('C', cCount);
-            totalPrice += GetTotalPricePerItem('D', dCount);
+            foreach (var basketItem in basketList)
+            {
+                totalPrice += GetTotalPricePerItem(basketItem.Sku, basketItem.Count);
+            }
 
             return totalPrice;
         }

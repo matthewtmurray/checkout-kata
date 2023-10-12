@@ -10,12 +10,14 @@ namespace BrightHr_Tests
         private List<SkuRule> _skuRules_SomeOffers;
         private List<SkuRule> _skuRules_LowMultiples;
         private List<SkuRule> _skuRules_HighMultiples;
+        private List<SkuRule> _skuRules_ExtendedItems;
         private string _singleItemBasket = "A";
         private string _oneOfEachItemBasket = "ABCD";
         private string _lowMultiplesBasket = "AABCCCD";
         private string _highMultiplesBasket = "AAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBCCCCCCD";
         private string _highMultiplesRandomOrderBasket = "BADDDACAACABBBBBCACACDCCCD";
         private string _invalidItemBasket = "J";
+        private string _extendedItemBasket = "ABCDEFGH";
 
         [SetUp]
         public void Setup()
@@ -26,6 +28,18 @@ namespace BrightHr_Tests
                 new SkuRule { Sku = 'B', Price = 30, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
                 new SkuRule { Sku = 'C', Price = 20, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
                 new SkuRule { Sku = 'D', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+            };
+
+            _skuRules_ExtendedItems = new List<SkuRule>
+            {
+                new SkuRule { Sku = 'A', Price = 50, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'B', Price = 30, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'C', Price = 20, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'D', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'E', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'F', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'G', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
+                new SkuRule { Sku = 'H', Price = 15, HasOfferPrice = false, OfferQuantity = 0, OfferPrice = 0 },
             };
 
             _skuRules_AllOffers = new List<SkuRule>
@@ -208,7 +222,21 @@ namespace BrightHr_Tests
             }
 
             Assert.Throws<Exception>(()=> _checkout.GetTotalPrice());
+        }
 
+        [Test]
+        public void IsValidPrice_ExtendedItemsBasket_NoOffers()
+        {
+            var basket = _extendedItemBasket;
+            var expectedBasketTotal = 175;
+            _checkout = new Checkout(_skuRules_ExtendedItems);
+            foreach (var item in basket.ToCharArray())
+            {
+                _checkout.Scan(item.ToString());
+            }
+
+            var actualBasketTotal = _checkout.GetTotalPrice();
+            Assert.AreEqual(expectedBasketTotal, actualBasketTotal);
         }
     }
 }
